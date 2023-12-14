@@ -255,7 +255,7 @@
     <!-- edit modal -->
     <div class="modal">
         <div class="modal-content" >
-            <form   action="../../controls/userinfo.php" method="POST">
+            <form   action="../../controls/userinfo.php" method="POST" enctype="multipart/form-data">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                
                 <div class="mb-4">
@@ -263,6 +263,11 @@
                       <input type="text" class="form-control task-desc" name ="title">
                     
                 </div>
+                 <div class="mb-4">
+                <label for="image">Select Image:</label>
+                <input type="file" name="file" id="file-inp" onchange="showPreview(this)" accept=".jpg, .png,.jpeg,.gif" style ="bbackground-color:grey;">
+                
+                </div> 
                 <div class="mb-4">
                       <label class="form-label" >Offre description</label>
                       <input type="text" class="form-control task-desc" name ="description" >
@@ -278,22 +283,23 @@
                       <input type="text" class="form-control task-desc" name="Location">
                     
                 </div>
-              
+              <a href="../index.php">index</a>
                 <!-- select input -->
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label class="form-label">Status</label>
                         <select class="form-control" name="task status" id="status">
                             <option value="img/default.svg">Default</option>
                             <option value="img/successnew.svg">New</option>
                             <option value="img/warning.svg">Urgent</option>
                         </select>
-                </div>
+                </div> -->
               
 
                 <div class="d-flex w-100 justify-content-center">
-                <input type="submit"  value="Save " name="addoffersubmit">
+                <input type="submit" class="btn  btn-block mb-4 " value="Save " name="addoffersubmit">
                 <div class="btn btn-danger btn-block mb-4 annuler">Annuler</div>
                 </div>
+             
               </form>
                 
         </div>
@@ -306,3 +312,4 @@
 </body>
 
 </html>
+   <!-- <img src="../../controls/uploads/657b45fd0079eCapture d’écran 2023-10-29 132103.png" alt="hhh"> -->
