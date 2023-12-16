@@ -86,22 +86,17 @@ $jobOffers = $dbOffer->getAllJobOffers();
 
 
 
-	<section action="#" method="get" class="search">
-		<h+2>Find Your Dream Job</h2>
-		<form class="form-inline">
+	<section action="#" method="get" class="search container">
+		
+		<div class="search d-flex gap-3 align-items-center">
+		<h3 class="mr-3">Find Your Dream Job</h3>
 			<div class="form-group mb-2">
-				<input type="text" name="keywords" placeholder="Keywords">
-
-
+				<input type="text" name="keywords"  id="keywords" placeholder="Keywords,location,company..">
 			</div>
-			<div class="form-group mx-sm-3 mb-2">
-				<input type="text" name="location" placeholder="Location">
+			
+			<button type="submit" onclick="search()" class="btn btn-primary mb-2">Search</button>
 			</div>
-			<div class="form-group mx-sm-3 mb-2">
-				<input type="text" name="company" placeholder="Company">
-			</div>
-			<button type="submit" class="btn btn-primary mb-2">Search</button>
-		</form>
+		
 	</section>
 
 	<!--------------------------  card  --------------------->
@@ -109,43 +104,9 @@ $jobOffers = $dbOffer->getAllJobOffers();
 		<h2 class="text-center py-3">Latest Job Listings</h2>
 		<div class="container py-2">
 
-		<?php foreach ($jobOffers as $offer): ?>
-			<article class="postcard light green">
-				<a class="postcard__img_link" href="#">
-					<img class="postcard__img" src="../controls/uploads/<?php echo $offer['img']; ?>" alt="Image Title" />
-				</a>
-				<div class="postcard__text t-dark">
-					<h3 class="postcard__title green"><a href="#"><?php echo $offer['title']; ?></a></h3>
-					<div class="postcard__subtitle small">
-						<time datetime="2020-05-25 12:00:00">
-							<i class="fas fa-calendar-alt mr-2"></i><?php echo $offer['created_at']; ?>
-						</time>
-					</div>
-					<div class="postcard__bar"></div>
-					<div class="postcard__preview-txt"><?php echo $offer['description']; ?></div>
-					<ul class="postcard__tagbox">
-						<li class="tag__item"><i class="fas fa-tag mr-2"></i>Maroc</li>
-						<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
-						<?php 
-						if($_SESSION['role'] === 'candidate'){
-						echo '  <li class="tag__item play green">';
-						echo '<a href="showinfo.php?offerid='.  $offer['id'] .' " ><i class="fas fa-play mr-2"></i>APPLY NOW</a>';
-						echo '  </li>';
-						}
-						?>
-						<?php 
-						if($_SESSION['role'] === 'admin'){
-							echo'<a href="../controls/updateoffer.php?upofferid='.$offer['id'] .' " ><li class="tag__item"><i class="fas fa-clock mr-2"></i>update</li></a>';
-							echo'<a href="../controls/userinfo.php?offerid='.$offer['id'] .' " ><li class="tag__item"><i class="fas fa-clock mr-2"></i>delete.</li></a>';
-						
+		<div id="result">
 
-						
-						}
-						?>
-					</ul>
-				</div>
-			</article>
-			<?php endforeach; ?>
+		</div>
 			
 		</div>
 	</section>
@@ -155,7 +116,23 @@ $jobOffers = $dbOffer->getAllJobOffers();
 
 	<footer>
 		<p>© 2023 JobEase </p>
-	</footer>
+	</footer> 
+	<script>
+        function search() {
+			var searchTerm = document.getElementById('keywords').value;
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '../controls/userinfo.php?term=' + searchTerm, true);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+				document.getElementById('result').innerHTML = xhr.responseText;
+			
+				}
+				};
+				xhr.send();
+				}
+				search();
+
+    </script>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

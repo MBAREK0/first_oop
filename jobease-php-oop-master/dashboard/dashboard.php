@@ -265,7 +265,7 @@
                 </div>
                  <div class="mb-4">
                 <label for="image">Select Image:</label>
-                <input type="file" name="file" id="file-inp" onchange="showPreview(this)" accept=".jpg, .png,.jpeg,.gif" style ="bbackground-color:grey;">
+                <input type="file" name="file" id="file-inp" accept=".jpg, .png,.jpeg,.gif" style ="bbackground-color:grey;">
                 
                 </div> 
                 <div class="mb-4">

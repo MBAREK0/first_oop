@@ -86,3 +86,9 @@ var_dump($_FILES);
 <!-- 
     strlen() : to count the caracters in string php
  -->
+
+ <!-- 
+
+
+ hamid lghlid
+  -->
