@@ -1,4 +1,11 @@
-<?php include '../../controls/userinfo.php'?>
+<?php include '../../controls/userinfo.php';
+    session_start();
+    if( $_SESSION['email'] == NULL  ){
+        header("Location:login.php");
+        exit();
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +26,7 @@
             <div class="h-100">
                 <div class="sidebar_logo d-flex align-items-end">
                   
-                    <a href="#" class="nav-link text-white-50">Dashboard</a>
+                    <a href="#" class="nav-link text-white-50">JobEase</a>
                    
                 </div>
 
@@ -31,19 +38,14 @@
                         <a href="candidat.php" class="sidebar_link"> <img src="img/agents.svg" alt="icon">Candidat</a>
                     </li>
                     <li class="sidebar_item">
-                        <a href="offre.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
+                        <a href="../index.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
                     </li>
-                    <li class="sidebar_item">
-                        <a href="contact.php" class="sidebar_link"><img src="img/agent.svg" alt="icon">Contact</a>
-                    </li>
-                    <li class="sidebar_item">
-                        <a href="#" class="sidebar_link"><img src="img/articles.svg" alt="icon">Articles</a>
-                    </li>
+                
 
                 </ul>
                 <div class="line"></div>
-                <a href="#" class="sidebar_link"><img src="img/settings.svg" alt="">Settings</a>
-
+                <a href="../logout.php" class="sidebar_link"><img src="img/settings.svg" alt="">logout</a>
+               
 
             </div>
         </aside>
@@ -210,7 +212,7 @@
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					var btn = document.getElementById('accept-btn')	;
-                    btn.style.backgroundColor = "gray";	
+                    btn.style="background-color:gray;"	;	
 			        console.log(xhr.responseText);
 				}
 				};

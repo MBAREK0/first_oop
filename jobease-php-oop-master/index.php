@@ -6,9 +6,6 @@ if( $_SESSION['email'] == NULL  ){
 	header("Location:login.php");
 	exit();
 }
-
-echo'-------------------------->'.$_SESSION['role'];
-echo'-------------------------->'.$_SESSION['userid'];
 ?>
 
 <!DOCTYPE html>
@@ -51,20 +48,25 @@ echo'-------------------------->'.$_SESSION['userid'];
 						<li class="nav-item active">
 							<a class="nav-link" href="#">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Features</a>
-						</li>
 
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="Nontification"  onclick="showNontification()"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Nontification
 							</a>
 						</li>
+						<?php if($_SESSION['role'] === 'admin'){?>
+							<li class="nav-item">
+							<a class="nav-link" href="dashboard/dashboard.php">Dachboard</a>
+						</li>
+						<?php }?>
 						<span class="nav-item active">
 							<a class="nav-link" href="#">EN</a>
 						</span>
 						<li class="nav-item">
 							<a class="nav-link" href="login.php">Login</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="logout.php">logout</a>
 						</li>
 					</ul>
 				</div>

@@ -104,7 +104,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             return "Error executing query: " . $this->connection->error;
         }
     }
-
+    // ......................................................getAllJobOffers
     public function getAllJobOffers() {
         $sql = "SELECT * FROM job_offers";
         $result = $this->connection->query($sql);
@@ -115,6 +115,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             return [];
         }
     }
+    // ......................................................deleteOffer
     public function deleteOffer($id){
         $del_req  = "DELETE FROM job_offers WHERE id =$id";
         $del_result = $this->connection->query($del_req);
@@ -125,6 +126,8 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             return false;
         }
     }
+    // ......................................................updateOffer
+
     public function updateOffer($title, $description, $company, $location,$filename,$id){
         $update_sql = "UPDATE job_offers SET title = '$title', description = '$description', company = '$company', location = '$location', img = '$filename' WHERE id = $id";
 
@@ -135,9 +138,8 @@ public function insertJobOffer($title, $description, $company, $location,$filena
         else {
             return false;
         }
-        
-    
     }
+    // ......................................................getJobOffer
     public function getJobOffer($id) {
         $upsql = "SELECT * FROM job_offers WHERE id =$id";
         $upresult = $this->connection->query($upsql);
@@ -148,6 +150,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             return [];
         }
     }
+    // ......................................................searchOffer
     public function searchOffer($search){
         $S_sql = "SELECT * FROM job_offers WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR company LIKE '%$search%' OR location LIKE '%$search%'";
         $S_result = $this->connection->query($S_sql);
@@ -156,9 +159,8 @@ public function insertJobOffer($title, $description, $company, $location,$filena
         } else {
             return [];
         }
-   
-
     }
+    // ......................................................applyOffer
     public function applyOffer($user_id,$job_id){
         $check_app_sql = "SELECT * FROM `job_applications` WHERE `user_id`='$user_id' AND `job_offer_id`='$job_id'";
         $chack_req = $this->connection->query($check_app_sql);
@@ -179,9 +181,8 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             // Handle the SQL error, for example:
             return "Error executing query: " . $this->connection->error;
         }
-
-       
     }
+    // ......................................................getUserNontification
     public function getUserNontification($user_id) {
       
         $get_nonti_req="SELECT `title`,`company` FROM `job_offers` J INNER JOIN `job_applications` A ON J.id = A.job_offer_id WHERE A.user_id =$user_id AND A.status='accept'";
@@ -198,6 +199,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             return "Error executing query: " . $this->connection->error;
         }
     }
+    // ......................................................getAdminNontification
     public function getAdminNontification() {
       
         $get_non_req="SELECT username,title,status,job_offer_id,user_id FROM `job_applications`  JA INNER JOIN job_offers JO INNER JOIN users U ON JA.job_offer_id = JO.id AND JA.user_id = u.id WHERE visibility=1";
@@ -214,6 +216,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
             return "Error executing query: " . $this->connection->error;
         }
     }
+    // ......................................................updateStatus
     public function updateStatus($usid, $jbid){
         $update_app_sql = "UPDATE `job_applications` SET `status`='accept',`visibility`='0' WHERE `user_id`='$usid' AND `job_offer_id`='$jbid'";
 
@@ -226,6 +229,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
         }
 
     } 
+    // ......................................................deleteStatus
     public function deleteStatus($usid, $jbid){
         $delete_app_sql = "DELETE FROM `job_applications`  WHERE `user_id`='$usid' AND `job_offer_id`='$jbid'";
 
@@ -323,7 +327,8 @@ if ( isset($_POST['addoffersubmit'])) {
     $database = new DatabaseOffer();
 
     if ($database->insertJobOffer($title, $description, $company, $location,$filename)) {
-        echo "Job offer inserted successfully.";
+        header("Location:../jobease-php-oop-master/dashboard/dashboard.php");
+        exit();
     } else {
         return "Error executing query: " . $database->connection->error;
     }
@@ -376,7 +381,8 @@ if ( isset($_POST['addoffersubmit'])) {
 
        }
         if ($updateOffer->updateOffer($title, $description, $company, $location,$filename,$update_id)) {
-            echo "Job offer updated successfully.";
+            header("Location:../jobease-php-oop-master/index.php");
+            exit();
         } else {
             echo "Error updating job offer.";
         }

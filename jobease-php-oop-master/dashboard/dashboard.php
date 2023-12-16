@@ -1,3 +1,18 @@
+
+<?php 
+
+include '../../controls/userinfo.php';
+
+session_start();
+if( $_SESSION['email'] == NULL  ){
+	header("Location:login.php");
+	exit();
+}
+
+$NONtif =new DatabaseOffer;
+$get_NONtif =$NONtif->getAdminNontification();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +34,7 @@
             <div class="h-100">
                 <div class="sidebar_logo d-flex align-items-end">
                     
-                    <a href="dashboard.php" class="nav-link text-white-50">Dashboard</a>
+                    <a href="dashboard.php" class="nav-link text-white-50">JobEase</a>
                     <img class="close align-self-start" src="img/close.svg" alt="icon">
                 </div>
 
@@ -33,16 +48,11 @@
                     <li class="sidebar_item">
                         <a href="../index.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
                     </li>
-                    <li class="sidebar_item">
-                        <a href="contact.php" class="sidebar_link"><img src="img/agent.svg" alt="icon">Contact</a>
-                    </li>
-                    <li class="sidebar_item">
-                        <a href="#" class="sidebar_link"><img src="img/articles.svg" alt="icon">Articles</a>
-                    </li>
+                   
 
                 </ul>
                 <div class="line"></div>
-                <a href="#" class="sidebar_link"><img src="img/settings.svg" alt="icon">Settings</a>
+                <a href="../logout.php" class="sidebar_link"><img src="img/settings.svg" alt="">logout</a>
 
 
             </div>
@@ -65,23 +75,20 @@
                             <div class="list-group-item px-3 d-flex justify-content-between align-items-center ">
                                 <p class="mt-auto">Notification</p><a href="#"><img src="img/settingsno.svg" alt="icon"></a>
                             </div>
-                            <div class="list-group-item px-3 d-flex"><img src="img/notif.svg" alt="iconimage">
+                            <div class="list-group-item px-3 ">
+                            
+                    
+                                <?php  foreach($get_NONtif as $app):?>
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text mb-3">Some quick example text to build on the card title and make up
+                                    <h5 class="card-title">new applyed</h5>
+                                    <p class="card-text mb-3">the condidate  <strong><?php echo $app['username'] ;?> </strong> applyed in the job offer <strong><?php echo $app['title'] ;?> </strong> use condidat page for see more 
                                         the bulk of the card's content.</p>
-                                    <small class="card-text">1  day ago</small>
+                                  
                                 </div>
+                                <?php endforeach;?>
                             </div>
-                            <div class="list-group-item px-3 d-flex"><img src="img/notif.svg" alt="iconimage">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text mb-3">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                    <small class="card-text">1  day ago</small>
-                                </div>
-                            </div>
-                            <div class="list-group-item px-3 text-center"><a href="#">View all notifications</a></div>
+                          
+                           
                         </div>
                     </div>
                     <div class="inline"></div>
@@ -101,7 +108,90 @@
                 </div>
             </nav>
             <section class="overview">
-     
+                <div class="row p-4">
+                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body  p-4">
+                                <div class="d-flex justify-content-between px-md-1">
+                                    <div>
+                                        <p class="mb-0">Offres</p>
+                                        <div class="mt-4">
+                                            <h3><strong>18</strong></h3>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="cursor">
+                                        <img src="img/project-icon-1.svg" alt="icon">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between px-md-1">
+                                    <div>
+                                        <p class="mb-0">Active Offres</p>
+                                        <div class="mt-4">
+                                            <h3><strong>132</strong></h3>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <img src="img/project-icon-2.svg" alt="icon">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between px-md-1">
+                                    <div>
+                                        <p class="mb-0">Nombre visiteurs</p>
+                                        <div class="mt-4">
+                                            <h3><strong>12</strong></h3>
+                                            <!-- <p><strong></strong> Completed</p> -->
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <img src="img/project-icon-3.svg" alt="icon">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between px-md-1">
+                                    <div>
+                                        <p class="mb-0">Offres approuver</p>
+                                        <div class="mt-4">
+                                            <h3><strong>76%</strong></h3>
+                                            <p><strong>57%</strong> Completed</p>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <img src="img/project-icon-4.svg" alt="icon">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <div class="px-4 row">
+               
                 <div class="col-xl-6 col-md-12 col-sm-12 col-12 mb-3" style="margin: auto">
                     <div class="card">
                         <div class="row p-4">
@@ -152,7 +242,7 @@
                 </div>
                  <div class="mb-4">
                 <label for="image">Select Image:</label>
-                <input type="file" name="file" id="file-inp" accept=".jpg, .png,.jpeg,.gif" style ="background-color:grey;">
+                <input type="file" name="file" id="file-inp" accept=".jpg, .png,.jpeg,.gif" style ="bbackground-color:grey;">
                 
                 </div> 
                 <div class="mb-4">
@@ -170,9 +260,8 @@
                       <input type="text" class="form-control task-desc" name="Location">
                     
                 </div>
-
                 <div class="d-flex w-100 justify-content-center">
-                <input type="submit" class="btn  btn-block mb-4 " value="Save " name="addoffersubmit">
+                <input type="submit" class="btn  btn-block mb-4 " value="Save " name="addoffersubmit" style="background-color:#20c997; margin-right:10px;">
                 <div class="btn btn-danger btn-block mb-4 annuler">Annuler</div>
                 </div>
              
@@ -188,3 +277,4 @@
 </body>
 
 </html>
+   <!-- <img src="../../controls/uploads/657b45fd0079eCapture d’écran 2023-10-29 132103.png" alt="hhh"> -->

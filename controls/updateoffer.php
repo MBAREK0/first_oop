@@ -20,7 +20,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
+<div class="container mt-5">
         <div class="modal-content" >
             <form   action="userinfo.php?updateid=<?php echo $_GET['upofferid'];?>" method="POST" enctype="multipart/form-data">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -32,8 +32,8 @@
                 </div>
                  <div class="mb-4">
                 <label for="image">Select Image:</label>
-                <input type="file" name="file" id="file-inp"  accept=".jpg, .png,.jpeg,.gif" value="<?php echo $jobOffers['img']; ?>" style ="bbackground-color:grey;">
-                                                                                    <!-- u muse now how can you put the value of img here  -->
+                <input type="file" name="file" id="file-inp"  accept=".jpg, .png,.jpeg,.gif" value="<?php echo $jobOffers['img']; ?>" style ="background-color:grey;"> <!-- u muse now how can you put the value of img here  -->
+                                                                                   
                 </div> 
                 <div class="mb-4">
                       <label class="form-label" >Offre description</label>
@@ -50,12 +50,12 @@
                       <input type="text" class="form-control task-desc" value="<?php echo $jobOffers['location']; ?> " name="Location">
                     
                 </div>
-              <a href="../index.php">index</a>
+           
 
                 <div class="d-flex w-100 justify-content-center">
                
                
-               <input type="Submit" class="btn  btn-block mb-4 " value="update" name="updateoffersubmit"></a>;
+               <input type="Submit" class="btn  btn-block mb-4 " value="update" name="updateoffersubmit" style="background-color:#20c997; margin-right:10px;">
 				
                
                 <div class="btn btn-danger btn-block mb-4 annuler">Annuler</div>
