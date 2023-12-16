@@ -1,3 +1,4 @@
+<?php include '../../controls/userinfo.php'?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,230 +103,45 @@
                 <table class="agent table align-middle bg-white">
                     <thead class="bg-light">
                         <tr>
-                            <th>Name</th>
-                            <th>Title</th>
+                            <th>Name de condidat</th>
+                            <th>offer title</th>
                             <th>Status</th>
-                            <th>Position</th>
+                          
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <?php 
+                    $nonAdmin =new DatabaseOffer;
+                    $get_applayed =$nonAdmin->getAdminNontification();
+                    foreach($get_applayed as $app):
+                    ?>
+                    
                         <tr class="freelancer">
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
                                         style="width: 45px; height: 45px" class="rounded-circle" />
                                     <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">John Doe</p>
-                                        <p class="text-muted mb-0 f_email">john.doe@gmail.com</p>
+                                        <p class="fw-bold mb-1 f_name"><?php echo $app['username'] ;?></p>
+                                       
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <p class="fw-normal mb-1 f_title">Software engineer <br> IT department</p>
+                                <p class="fw-normal mb-1 f_title"><?php echo $app['title'] ;?></p>
                                 
                             </td>
                             <td>
-                                <span class="f_status">Active</span>
+                                <span class="f_status"><?php echo $app['status'] ;?></span>
                             </td>
-                            <td class="f_position">Senior</td>
+                          
                             <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
+                               <a href="../../controls/userinfo.php?deUsId=<?php echo $app['user_id'] ;?>&deJbId=<?php echo $app['job_offer_id'] ;?>" ><img class="delet_user "  src="img/user-x.svg" alt="" style="margin:1rem;"></a>
+                                <button onclick=" status(<?php echo $app['user_id'] ;?>,<?php echo $app['job_offer_id'] ;?>)" style="background-color:green; color:white;" id="accept-btn">accept</button>
                             </td>
                         </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">Alex Ray</p>
-                                        <p class="text-muted mb-0 f_email">alex.ray@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Consultant<br>Finance</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Onboarding</span>
-                            </td>
-                            <td class="f_position">Junior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">Kate Hunington</p>
-                                        <p class="text-muted mb-0 f_email">kate.hunington@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Designer<br>UI/UX</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Awaiting</span>
-                            </td>
-                            <td class="f_position">Senior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
-                                        style="width: 45px; height: 45px" class="rounded-circle" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">John Doe</p>
-                                        <p class="text-muted mb-0 f_email">john.doe@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Software engineer <br> IT department</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Active</span>
-                            </td>
-                            <td class="f_position">Senior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">Alex Ray</p>
-                                        <p class="text-muted mb-0 f_email">alex.ray@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Consultant<br>Finance</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Onboarding</span>
-                            </td>
-                            <td class="f_position">Junior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">Kate Hunington</p>
-                                        <p class="text-muted mb-0 f_email">kate.hunington@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Designer<br>UI/UX</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Awaiting</span>
-                            </td>
-                            <td class="f_position">Senior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
-                                        style="width: 45px; height: 45px" class="rounded-circle" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">John Doe</p>
-                                        <p class="text-muted mb-0 f_email">john.doe@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Software engineer <br> IT department</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Active</span>
-                            </td>
-                            <td class="f_position">Senior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">Alex Ray</p>
-                                        <p class="text-muted mb-0 f_email">alex.ray@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Consultant<br>Finance</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Onboarding</span>
-                            </td>
-                            <td class="f_position">Junior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
-                        <tr class="freelancer">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 f_name">Kate Hunington</p>
-                                        <p class="text-muted mb-0 f_email">kate.hunington@gmail.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="fw-normal mb-1 f_title">Designer<br>UI/UX</p>
-                                
-                            </td>
-                            <td>
-                                <span class="f_status">Awaiting</span>
-                            </td>
-                            <td class="f_position">Senior</td>
-                            <td>
-                                <img class="delet_user" src="img/user-x.svg" alt="">
-                                <img class="ms-2 edit" src="img/edit.svg" alt="">
-                            </td>
-                        </tr>
+                       <?php endforeach;?>
                     </tbody>
                 </table>
 
@@ -387,6 +203,22 @@
                 </div>
         </div>
     </div>
+    <script>
+        function status(usid,jbid){
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '../../controls/userinfo.php?upUsId=' + usid +'&upJbId='+jbid, true);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var btn = document.getElementById('accept-btn')	;
+                    btn.style.backgroundColor = "gray";	
+			        console.log(xhr.responseText);
+				}
+				};
+				xhr.send();
+				
+				}
+                
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

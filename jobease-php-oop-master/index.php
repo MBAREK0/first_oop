@@ -8,14 +8,7 @@ if( $_SESSION['email'] == NULL  ){
 }
 
 echo'-------------------------->'.$_SESSION['role'];
-
-// Create an object of DatabaseOffer
-$dbOffer = new DatabaseOffer;
-
-// Fetch all job offers
-$jobOffers = $dbOffer->getAllJobOffers();
-
-
+echo'-------------------------->'.$_SESSION['userid'];
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +56,9 @@ $jobOffers = $dbOffer->getAllJobOffers();
 						</li>
 
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								language
+							<a class="nav-link dropdown-toggle" href="#" id="Nontification"  onclick="showNontification()"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Nontification
 							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">FR</a>
-								<a class="dropdown-item" href="#">EN</a>
-							</div>
 						</li>
 						<span class="nav-item active">
 							<a class="nav-link" href="#">EN</a>
@@ -83,8 +72,20 @@ $jobOffers = $dbOffer->getAllJobOffers();
 		</nav>
 	</header>
 
+	<div id="N-card"  style ="position :absolute; right:80px; display:none ; width:400px; background-color:#2a2b81 ; z-index:100; padding:10px; top:140px;">
+	<h4 style="text-align:center; color:#dedede;" class ="mb-5">====== Nontification ======</h4>
+		<?php 
+			$N_Offer = new DatabaseOffer;
+			$N_jobOffers = $N_Offer->getUserNontification($_SESSION['userid']);
 
+			foreach($N_jobOffers as $Nonti):
+				echo '<p style="color:#dedede;">Congradulation  your Offer Job '.$Nonti['title'].'  On '.$Nonti['company'].' Is accepted.</p>';
+				echo'  <hr style="border-color: gray;">';
+			endforeach;
+		
+		?>
 
+	</div> 
 
 	<section action="#" method="get" class="search container">
 		
@@ -118,6 +119,17 @@ $jobOffers = $dbOffer->getAllJobOffers();
 		<p>© 2023 JobEase </p>
 	</footer> 
 	<script>
+
+function showNontification() {
+    var Nontif = document.getElementById('N-card');
+
+    if (Nontif.style.display == "block") {
+        Nontif.style.display = "none";
+    } else {
+        Nontif.style.display = "block";
+    }
+}
+
         function search() {
 			var searchTerm = document.getElementById('keywords').value;
 			var xhr = new XMLHttpRequest();
@@ -132,8 +144,23 @@ $jobOffers = $dbOffer->getAllJobOffers();
 				}
 				search();
 
+		function apply(id){
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '../controls/userinfo.php?applyid=' + id, true);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+								
+			        console.log(xhr.responseText);
+				}
+				};
+				xhr.send();
+				
+				}
+		
+
     </script>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

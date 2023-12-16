@@ -31,7 +31,7 @@
                         <a href="candidat.php" class="sidebar_link"> <img src="img/agents.svg" alt="icon">Candidat</a>
                     </li>
                     <li class="sidebar_item">
-                        <a href="offre.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
+                        <a href="../index.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
                     </li>
                     <li class="sidebar_item">
                         <a href="contact.php" class="sidebar_link"><img src="img/agent.svg" alt="icon">Contact</a>
@@ -48,10 +48,7 @@
             </div>
         </aside>
         <div class="main">
-            <?php 
-             session_start();
-            echo $_SESSION['check'];
-            ?>
+          
             <nav class="navbar justify-content-space-between pe-4 ps-2">
                 <button class="btn open">
                     <span class="navbar-toggler-icon"></span>
@@ -104,117 +101,7 @@
                 </div>
             </nav>
             <section class="overview">
-                <div class="row p-4">
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                        <div class="card">
-                            <div class="card-body  p-4">
-                                <div class="d-flex justify-content-between px-md-1">
-                                    <div>
-                                        <p class="mb-0">Offres</p>
-                                        <div class="mt-4">
-                                            <h3><strong>18</strong></h3>
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="cursor">
-                                        <img src="img/project-icon-1.svg" alt="icon">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between px-md-1">
-                                    <div>
-                                        <p class="mb-0">Active Offres</p>
-                                        <div class="mt-4">
-                                            <h3><strong>132</strong></h3>
-                                           
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <img src="img/project-icon-2.svg" alt="icon">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between px-md-1">
-                                    <div>
-                                        <p class="mb-0">Nombre visiteurs</p>
-                                        <div class="mt-4">
-                                            <h3><strong>12</strong></h3>
-                                            <!-- <p><strong></strong> Completed</p> -->
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <img src="img/project-icon-3.svg" alt="icon">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between px-md-1">
-                                    <div>
-                                        <p class="mb-0">Offres approuver</p>
-                                        <div class="mt-4">
-                                            <h3><strong>76%</strong></h3>
-                                            <p><strong>57%</strong> Completed</p>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <img src="img/project-icon-4.svg" alt="icon">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="px-4">
-                <div class="card mb-3">
-                    <div class="row g-0 px-2">
-                        <div class="col-xl-8 col-md-12 col-sm-12 col-12 p-4 ">
-                            <div>
-                                <h4>Today’s trends</h4>
-                                <p>as of 27 oct 2023, 22:48 PM</p>
-                            </div>
-                            <div class="w-100" id="chart">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-4 row">
-                <div class="col-xl-6 col-md-12 col-sm-12 col-12 mb-3 " style="margin: auto">
-                    <div class="card">
-                        <div class="row p-4">
-                            <div class="col">
-                                <p class="title">Unresolved Offres</p>
-                                <p><span>Group:</span> Support</p>
-                            </div>
-                            <a class="col d-flex justify-content-end fw-medium" href="#">View details</a>
-
-                        </div>
-                        
-                        </div>
-                    </div>
-                </div>
+     
                 <div class="col-xl-6 col-md-12 col-sm-12 col-12 mb-3" style="margin: auto">
                     <div class="card">
                         <div class="row p-4">
@@ -265,7 +152,7 @@
                 </div>
                  <div class="mb-4">
                 <label for="image">Select Image:</label>
-                <input type="file" name="file" id="file-inp" accept=".jpg, .png,.jpeg,.gif" style ="bbackground-color:grey;">
+                <input type="file" name="file" id="file-inp" accept=".jpg, .png,.jpeg,.gif" style ="background-color:grey;">
                 
                 </div> 
                 <div class="mb-4">
@@ -283,17 +170,6 @@
                       <input type="text" class="form-control task-desc" name="Location">
                     
                 </div>
-              <a href="../index.php">index</a>
-                <!-- select input -->
-                <!-- <div class="mb-4">
-                    <label class="form-label">Status</label>
-                        <select class="form-control" name="task status" id="status">
-                            <option value="img/default.svg">Default</option>
-                            <option value="img/successnew.svg">New</option>
-                            <option value="img/warning.svg">Urgent</option>
-                        </select>
-                </div> -->
-              
 
                 <div class="d-flex w-100 justify-content-center">
                 <input type="submit" class="btn  btn-block mb-4 " value="Save " name="addoffersubmit">
@@ -312,4 +188,3 @@
 </body>
 
 </html>
-   <!-- <img src="../../controls/uploads/657b45fd0079eCapture d’écran 2023-10-29 132103.png" alt="hhh"> -->

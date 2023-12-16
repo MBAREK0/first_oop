@@ -2,7 +2,9 @@
 <?php 
 
 require 'conect.php';
-
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                Create database-conection class //    
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Database extends conection {
 
     public $connection;  //you should be make this varible privat after finiched the project 
@@ -64,8 +66,9 @@ class DatabaseAuthantification  extends Database{
                 $row = $result->fetch_assoc();
                 session_start();
                 $this->role =$row['role'];
-             echo'-------------------------->'.$row['role'];
+            
                 $_SESSION['email'] = $row['useremail'] ;
+                $_SESSION['userid'] = $row['id'] ;
                 $_SESSION['role'] = $this->role ;
 
                 // Verify the password
@@ -98,7 +101,7 @@ public function insertJobOffer($title, $description, $company, $location,$filena
         if ($this->connection->query($sql)) {
             return true;
         } else {
-            return false;
+            return "Error executing query: " . $this->connection->error;
         }
     }
 
@@ -153,17 +156,93 @@ public function insertJobOffer($title, $description, $company, $location,$filena
         } else {
             return [];
         }
-
+   
 
     }
+    public function applyOffer($user_id,$job_id){
+        $check_app_sql = "SELECT * FROM `job_applications` WHERE `user_id`='$user_id' AND `job_offer_id`='$job_id'";
+        $chack_req = $this->connection->query($check_app_sql);
+        if ($chack_req !== false) {
+            if ($chack_req->num_rows == 0) {
+                $app_sql = "INSERT INTO `job_applications`(`user_id`, `job_offer_id`) VALUES ('$user_id','$job_id')";
+        
+                if ($this->connection->query($app_sql)) {
+                    return true;
+                } else {
+                    return false;
+                }
+              
+            } else {
+                return 'you are alrady applyed this jop ';
+            }
+        } else {
+            // Handle the SQL error, for example:
+            return "Error executing query: " . $this->connection->error;
+        }
+
+       
+    }
+    public function getUserNontification($user_id) {
+      
+        $get_nonti_req="SELECT `title`,`company` FROM `job_offers` J INNER JOIN `job_applications` A ON J.id = A.job_offer_id WHERE A.user_id =$user_id AND A.status='accept'";
+        $Nonti = $this->connection->query($get_nonti_req);
+
+        if ($Nonti !== false) {
+            if ($Nonti->num_rows > 0) {
+                return $Nonti->fetch_all(MYSQLI_ASSOC);
+            } else {
+                return [];
+            }
+        } else {
+            // Handle the SQL error, for example:
+            return "Error executing query: " . $this->connection->error;
+        }
+    }
+    public function getAdminNontification() {
+      
+        $get_non_req="SELECT username,title,status,job_offer_id,user_id FROM `job_applications`  JA INNER JOIN job_offers JO INNER JOIN users U ON JA.job_offer_id = JO.id AND JA.user_id = u.id WHERE visibility=1";
+        $Non = $this->connection->query($get_non_req);
+
+        if ($Non !== false) {
+            if ($Non->num_rows > 0) {
+                return $Non->fetch_all(MYSQLI_ASSOC);
+            } else {
+                return [];
+            }
+        } else {
+            // Handle the SQL error, for example:
+            return "Error executing query: " . $this->connection->error;
+        }
+    }
+    public function updateStatus($usid, $jbid){
+        $update_app_sql = "UPDATE `job_applications` SET `status`='accept',`visibility`='0' WHERE `user_id`='$usid' AND `job_offer_id`='$jbid'";
+
+        $update_app_result = $this->connection->query($update_app_sql);
+        if ($update_app_result){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    } 
+    public function deleteStatus($usid, $jbid){
+        $delete_app_sql = "DELETE FROM `job_applications`  WHERE `user_id`='$usid' AND `job_offer_id`='$jbid'";
+
+        $delete_app_result = $this->connection->query($delete_app_sql);
+        if ($delete_app_result){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    } 
+    
 
 }// -----------------------------------------------------------------------------------------------------------------</ CLOSE CLASS >
 
-
-// /////////////////////////////////////////////////////////////////
-//                   save the info of user in data base 'Register'//    
-// /////////////////////////////////////////////////////////////////
-
+     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> REGISTER <:::::::::::
 
 if (isset($_POST['Register'])) {
     $username = $_POST['username'];
@@ -192,10 +271,7 @@ if (isset($_POST['Register'])) {
     }
 }
 
-// /////////////////////////////////////////////////////////////////
-//                            the code of login with check role   //    
-// /////////////////////////////////////////////////////////////////
-
+     // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> LOGIN WITH CHECK ROLE <:::::::::::
 
 if (isset($_POST['Login'])) {
     $email = $_POST['email'];
@@ -215,11 +291,10 @@ if (isset($_POST['Login'])) {
     } else {
         echo $result; // Output error message
     }
+    $database->closeConnection();
 }
 
-// /////////////////////////////////////////////////////////////////
-//                                            create a job offer  //    
-// /////////////////////////////////////////////////////////////////
+     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> CREATE A JOB OFFER <:::::::::::
  
 
 if ( isset($_POST['addoffersubmit'])) {
@@ -250,15 +325,13 @@ if ( isset($_POST['addoffersubmit'])) {
     if ($database->insertJobOffer($title, $description, $company, $location,$filename)) {
         echo "Job offer inserted successfully.";
     } else {
-        echo "Error inserting job offer.";
+        return "Error executing query: " . $database->connection->error;
     }
 
     $database->closeConnection();
 }
 
-// /////////////////////////////////////////////////////////////////
-//                                            delete a job offer  //    
-// /////////////////////////////////////////////////////////////////
+     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> DELETE A JOB OFFER <:::::::::::
 
     if(isset($_GET['offerid'])){
         $del_id=$_GET['offerid'];
@@ -267,11 +340,10 @@ if ( isset($_POST['addoffersubmit'])) {
         header("Location:../jobease-php-oop-master/index.php");
         exit();
        }
+  
     }
 
-// /////////////////////////////////////////////////////////////////
-//                                            update a job offer  //    
-// /////////////////////////////////////////////////////////////////
+     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> UPDATE A JOB OFFER <:::::::::::
 
     if ( isset($_POST['updateoffersubmit'])) {
       
@@ -306,19 +378,15 @@ if ( isset($_POST['addoffersubmit'])) {
         if ($updateOffer->updateOffer($title, $description, $company, $location,$filename,$update_id)) {
             echo "Job offer updated successfully.";
         } else {
-            echo "Error inserting job offer.";
+            echo "Error updating job offer.";
         }
     
         $updateOffer->closeConnection();
     }
     
-    // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+    // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> SEARCH <:::::::::::
     $S_Offer = new DatabaseOffer;
-
-// Fetch all job offers
-
- 
-
+    
 
 if(isset($_GET["term"])) {
     $search = $_GET["term"];
@@ -348,7 +416,7 @@ if(isset($_GET["term"])) {
                          
 						if($_SESSION['role'] === 'candidate'){
 						echo '  <li class="tag__item play green">';
-						echo '<a href="showinfo.php?offerid='.  $offer['id'] .' " ><i class="fas fa-play mr-2"></i>APPLY NOW</a>';
+						echo '<a onclick="apply('.$offer['id'].')" ><i class="fas fa-play mr-2"></i>APPLY NOW</a>';
 						echo '  </li>';
 						}
 						?>
@@ -365,7 +433,57 @@ if(isset($_GET["term"])) {
 					</ul>
 				</div>
 			</article>
-			<?php endforeach; }?>
+			<?php endforeach;
+           
+        }
+            
+     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> SEARAPLLY NOW <:::::::::::           
+        if(isset($_GET['applyid'])){
+            session_start();
+            $user_id = $_SESSION['userid'];
+            $job_id  =$_GET['applyid'];
+            $app_offer = new DatabaseOffer();
+        
+            if ($app_offer->applyOffer( $user_id, $job_id)) {
+                echo "apply successfully.";
+            } else {
+                echo "Error applay";
+            }
+
+            $database->closeConnection();
+                    
+        }
+ // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> MODIFY STATUS <:::::::::::  
+        if(isset($_GET['upUsId']) && isset($_GET['upJbId'])){
+            $user=$_GET['upUsId'];
+            $job=$_GET['upJbId'];
+            echo'hahaha hahaha'. $user. $job.'</br>';
+            $updateStatus = new DatabaseOffer();
+    
+        if ($updateStatus->updateStatus($user,$job)) {
+            echo "Job offer updated successfully.";
+        } else {
+            echo "Error updating job offer.";
+        }
+    
+        $updateStatus->closeConnection();
+        }
+ // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::> DELETE STATUS <:::::::::::  
+        if(isset($_GET['deUsId']) && isset($_GET['deJbId'])){
+            $user=$_GET['deUsId'];
+            $job=$_GET['deJbId'];
+        
+            $deleteStatus = new DatabaseOffer();
+
+        if ($deleteStatus->deleteStatus($user,$job)) {
+           header("Location:../jobease-php-oop-master/dashboard/candidat.php");
+           exit();
+        } else {
+            echo "Error deleted job offer.";
+        }
+        $deleteStatus->closeConnection();
+        }
+        ?>
 
 
 
