@@ -1,9 +1,9 @@
 
 <?php 
-include '../controls/userinfo.php';
+include 'controls/userinfo.php';
 session_start();
 if( $_SESSION['email'] == NULL  ){
-	header("Location:login.php");
+	header("Location:jobease-php-oop-master/login.php");
 	exit();
 }
 ?>
@@ -18,7 +18,7 @@ if( $_SESSION['email'] == NULL  ){
 		JobEase
 	</title>
 
-	<link rel="stylesheet" href="styles/style.css">
+	<link rel="stylesheet" href="jobease-php-oop-master/styles/style.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -56,17 +56,17 @@ if( $_SESSION['email'] == NULL  ){
 						</li>
 						<?php if($_SESSION['role'] === 'admin'){?>
 							<li class="nav-item">
-							<a class="nav-link" href="dashboard/dashboard.php">Dachboard</a>
+							<a class="nav-link" href="jobease-php-oop-master/dashboard/dashboard.php">Dachboard</a>
 						</li>
 						<?php }?>
 						<span class="nav-item active">
 							<a class="nav-link" href="#">EN</a>
 						</span>
 						<li class="nav-item">
-							<a class="nav-link" href="login.php">Login</a>
+							<a class="nav-link" href="jobease-php-oop-master/login.php">Login</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="logout.php">logout</a>
+							<a class="nav-link" href="jobease-php-oop-master/logout.php">logout</a>
 						</li>
 					</ul>
 				</div>
@@ -135,7 +135,7 @@ function showNontification() {
         function search() {
 			var searchTerm = document.getElementById('keywords').value;
 			var xhr = new XMLHttpRequest();
-			xhr.open('GET', '../controls/userinfo.php?term=' + searchTerm, true);
+			xhr.open('GET', 'controls/userinfo.php?term=' + searchTerm, true);
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 				document.getElementById('result').innerHTML = xhr.responseText;
@@ -148,7 +148,7 @@ function showNontification() {
 
 		function apply(id){
 			var xhr = new XMLHttpRequest();
-			xhr.open('GET', '../controls/userinfo.php?applyid=' + id, true);
+			xhr.open('GET', 'controls/userinfo.php?applyid=' + id, true);
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 								

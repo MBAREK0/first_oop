@@ -38,7 +38,7 @@
                         <a href="candidat.php" class="sidebar_link"> <img src="img/agents.svg" alt="icon">Candidat</a>
                     </li>
                     <li class="sidebar_item">
-                        <a href="../index.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
+                        <a href="../../index.php" class="sidebar_link"> <img src="img/task.svg" alt="icon">Offre</a>
                     </li>
                 
 

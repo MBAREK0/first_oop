@@ -289,7 +289,7 @@ if (isset($_POST['Login'])) {
             header("Location:../jobease-php-oop-master/dashboard/dashboard.php");
             exit();
         } elseif ($database->role == 'candidate') {
-            header("Location:../jobease-php-oop-master/index.php");
+            header("Location:../index.php");
             exit();
         }
     } else {
@@ -342,7 +342,7 @@ if ( isset($_POST['addoffersubmit'])) {
         $del_id=$_GET['offerid'];
         $deletOffer= new DatabaseOffer();
        if( $deletOffer->deleteOffer($del_id)){
-        header("Location:../jobease-php-oop-master/index.php");
+        header("Location:../index.php");
         exit();
        }
   
@@ -381,7 +381,7 @@ if ( isset($_POST['addoffersubmit'])) {
 
        }
         if ($updateOffer->updateOffer($title, $description, $company, $location,$filename,$update_id)) {
-            header("Location:../jobease-php-oop-master/index.php");
+            header("Location:../index.php");
             exit();
         } else {
             echo "Error updating job offer.";
@@ -404,7 +404,7 @@ if(isset($_GET["term"])) {
            <?php foreach ($jobOffers as $offer): ?>
 			<article class="postcard light green">
 				<a class="postcard__img_link" href="#">
-					<img class="postcard__img" src="../controls/uploads/<?php echo $offer['img']; ?>" alt="Image Title" />
+					<img class="postcard__img" src="controls/uploads/<?php echo $offer['img']; ?>" alt="Image Title" />
 				</a>
 				<div class="postcard__text t-dark">
 					<h3 class="postcard__title green"><a href="#"><?php echo $offer['title']; ?></a></h3>
@@ -429,8 +429,8 @@ if(isset($_GET["term"])) {
 						<?php 
                       
 						if($_SESSION['role'] === 'admin'){
-							echo'<a href="../controls/updateoffer.php?upofferid='.$offer['id'] .' " ><li class="tag__item"><i class="fas fa-clock mr-2"></i>update</li></a>';
-							echo'<a href="../controls/userinfo.php?offerid='.$offer['id'] .' " ><li class="tag__item"><i class="fas fa-clock mr-2"></i>delete.</li></a>';
+							echo'<a href="controls/updateoffer.php?upofferid='.$offer['id'] .' " ><li class="tag__item"><i class="fas fa-clock mr-2"></i>update</li></a>';
+							echo'<a href="controls/userinfo.php?offerid='.$offer['id'] .' " ><li class="tag__item"><i class="fas fa-clock mr-2"></i>delete.</li></a>';
 						
 
 						

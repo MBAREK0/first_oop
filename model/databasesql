@@ -1,33 +1,81 @@
-CREATE DATABASE jop;
-USE jop;
 
- -- Create the users table
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL,
-    useremail VARCHAR(255) NOT NULL unique,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL
-);
 
--- Create the job_offers table
-CREATE TABLE job_offers (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL,
-    company VARCHAR(255) NOT NULL,
-    location VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    is_active BOOLEAN DEFAULT true,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
--- Create the job_applications table
-CREATE TABLE job_applications (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    job_offer_id INT NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (job_offer_id) REFERENCES job_offers(id)
-);
+
+CREATE TABLE `job_applications` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `job_offer_id` int(11) NOT NULL,
+  `status` varchar(20) DEFAULT 'wait_answer',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `visibility` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+CREATE TABLE `job_offers` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `img` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `useremail` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+INSERT INTO `users` (`id`, `username`, `useremail`, `password`, `role`) VALUES
+(3, 'abdo', 'o@o.com', '$2y$10$K5FdNPP1iiiilmpANvY6O.H7q69B4MrpAuUWiozR5fu49rag4SOhy', 'candidate'),
+(4, 'amine', 'a@a.com', '$2y$10$SeT4VilZsDCmQ62VUBwet.Bmw7qMnu2GeG4BhpCL5jCQcP.CAsE/u', 'admin'),
+
+
+
+
+ALTER TABLE `job_applications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `job_applications_ibfk_1` (`user_id`),
+  ADD KEY `job_applications_ibfk_2` (`job_offer_id`);
+
+ALTER TABLE `job_offers`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `useremail` (`useremail`);
+
+
+ALTER TABLE `job_applications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
+
+ALTER TABLE `job_offers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+
+ALTER TABLE `job_applications`
+  ADD CONSTRAINT `job_applications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `job_applications_ibfk_2` FOREIGN KEY (`job_offer_id`) REFERENCES `job_offers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
